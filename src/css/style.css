@@ -70,3 +70,21 @@ li {
     width: 40%;
     padding-top: 10px;
 }
+
+img {
+    width: 40%;
+    height: 40%;
+}
+
+.hide {
+    display: none;
+}
+
+#btn {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

@@ -1,10 +1,48 @@
-//import createHomePage from './home.js'
+import loadImage from './imageModule.js'
 //import createContactPage from './contact.js'
 //import createProductsPage from './products.js'
-
+console.log(3)
 function buildWebsite(){
     const header = createHeader()
     document.body.appendChild(header)
+    document.body.appendChild(loadImage())
+    const img1 = document.getElementById('img1')
+    img1.classList.remove('hide')
+    addScrollButton()
+
+    //id.substr(id.length - 1);
+
+
+
+    function addScrollButton(){
+        const nextButton = document.createElement('button')
+        nextButton.setAttribute('id', 'btn')
+        nextButton.innerText = 'Next'
+
+        const previousButton = document.createElement('button')
+        //previousButton.setAttribute('id', 'btn')
+        previousButton.innerText = 'Previous'
+
+        nextButton.addEventListener('click', () => {
+            img1.classList.add('hide')
+            const img2 = document.getElementById('img2')
+            img2.classList.remove('hide')
+
+
+        })
+
+        previousButton.addEventListener('click', () => {
+            img2.classList.add('hide')
+            //const img2 = document.getElementById('img2')
+            img1.classList.remove('hide')
+
+        })
+        
+
+        document.body.appendChild(nextButton)
+        document.body.appendChild(previousButton)
+
+    }
 
     // function createNavBar (header) {
     //     const nav = createNav()
