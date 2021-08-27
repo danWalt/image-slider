@@ -51,8 +51,7 @@ li {
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    
+    justify-content: center;   
 }
 
 .text-box {
@@ -74,17 +73,20 @@ li {
 img {
     width: 40%;
     height: 40%;
+    transition: opacity 300ms ease-in-out 1s;
 }
 
 .hide {
     display: none;
 }
 
+#buttonDiv {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;   
+}
+
 #btn {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+    width: 100px;
 }

@@ -1,7 +1,7 @@
 import loadImage from './imageModule.js'
 //import createContactPage from './contact.js'
 //import createProductsPage from './products.js'
-console.log(3)
+
 function buildWebsite(){
     const header = createHeader()
     document.body.appendChild(header)
@@ -13,34 +13,47 @@ function buildWebsite(){
     //id.substr(id.length - 1);
 
 
+let currentImg = img1
+let imgCounter = 1
 
     function addScrollButton(){
+        
         const nextButton = document.createElement('button')
         nextButton.setAttribute('id', 'btn')
         nextButton.innerText = 'Next'
 
         const previousButton = document.createElement('button')
-        //previousButton.setAttribute('id', 'btn')
+        previousButton.setAttribute('id', 'btn')
         previousButton.innerText = 'Previous'
 
         nextButton.addEventListener('click', () => {
-            img1.classList.add('hide')
-            const img2 = document.getElementById('img2')
-            img2.classList.remove('hide')
+            currentImg.classList.add('hide')
+            if(imgCounter < 7){ //TODO: get number of images in folder
+                imgCounter++;
+            }
+            currentImg = document.getElementById('img'+imgCounter)
+            currentImg.classList.remove('hide')
 
 
         })
 
         previousButton.addEventListener('click', () => {
-            img2.classList.add('hide')
-            //const img2 = document.getElementById('img2')
-            img1.classList.remove('hide')
+            currentImg.classList.add('hide')
+            if(imgCounter > 1){
+                imgCounter--;
+            }
+            currentImg = document.getElementById('img'+imgCounter)
+            currentImg.classList.remove('hide')
 
         })
         
+        const buttonDiv = document.createElement('div')
+        buttonDiv.setAttribute('id','buttonDiv')
 
-        document.body.appendChild(nextButton)
-        document.body.appendChild(previousButton)
+
+        buttonDiv.appendChild(previousButton)
+        buttonDiv.appendChild(nextButton)
+        document.body.appendChild(buttonDiv)
 
     }
 
