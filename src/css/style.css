@@ -84,9 +84,22 @@ img {
     text-align: center;
     display: flex;
     flex-direction: row;
-    justify-content: center;   
+    justify-content: center;
+    padding: 35px;
 }
 
 #btn {
     width: 100px;
 }
+
+ul {
+    list-style-type:disc;
+}
+
+li {
+    color: gray;
+}
+
+.selectedItem::marker {
+    color: black;
+  }

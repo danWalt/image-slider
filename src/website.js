@@ -27,24 +27,16 @@ let imgCounter = 1
         previousButton.innerText = 'Previous'
 
         nextButton.addEventListener('click', () => {
-            currentImg.classList.add('hide')
             if(imgCounter < 7){ //TODO: get number of images in folder
-                imgCounter++;
+                changeImage(imgCounter + 1);
+                
             }
-            currentImg = document.getElementById('img'+imgCounter)
-            currentImg.classList.remove('hide')
-
-
-        })
+          })
 
         previousButton.addEventListener('click', () => {
-            currentImg.classList.add('hide')
             if(imgCounter > 1){
-                imgCounter--;
+                changeImage(imgCounter - 1);
             }
-            currentImg = document.getElementById('img'+imgCounter)
-            currentImg.classList.remove('hide')
-
         })
         
         const buttonDiv = document.createElement('div')
@@ -52,9 +44,48 @@ let imgCounter = 1
 
 
         buttonDiv.appendChild(previousButton)
+        addLi(buttonDiv)
         buttonDiv.appendChild(nextButton)
         document.body.appendChild(buttonDiv)
+    }
 
+    function addLi (buttonDiv) {
+
+        const orderedList = document.createElement('ul')
+        orderedList.setAttribute('id', 'orderedList')
+
+        for (let i = 1; i<=7; i++){
+            let currentLi = document.createElement('li')
+            currentLi.setAttribute('id', i)
+            if (i == 1) {
+                currentLi.classList.add('selectedItem')
+            }
+
+            currentLi.addEventListener('click', () => {
+                currentLi.classList.add('selectedItem')
+                changeImage(i)
+            })
+
+            orderedList.appendChild(currentLi)
+        }
+
+        buttonDiv.appendChild(orderedList)
+    }
+
+    function changeImage(counter) {
+        imgCounter = counter
+        currentImg.classList.add('hide')
+        currentImg = document.getElementById('img'+imgCounter)
+        currentImg.classList.remove('hide')
+        for (let i = 1; i<=7; i++){
+            let li = document.getElementById(i) 
+            if (i == counter){
+                li.classList.add('selectedItem')
+            }
+            else {
+                li.classList.remove('selectedItem')
+            }
+        }    
     }
 
     // function createNavBar (header) {
@@ -80,70 +111,70 @@ let imgCounter = 1
     //     return nav
     // }
 
-    function createTabList(){
-        const tabList = document.createElement('ul')
-        const home = document.createElement('li')
-        const products = document.createElement('li')
-        const contact = document.createElement('li')
+    // function createTabList(){
+    //     const tabList = document.createElement('ul')
+    //     const home = document.createElement('li')
+    //     const products = document.createElement('li')
+    //     const contact = document.createElement('li')
 
-        setHeaderLiItems(home, products, contact)
+    //     setHeaderLiItems(home, products, contact)
 
-        tabList.classList.add('tab-list')
-        tabList.appendChild(home)
-        tabList.appendChild(products)
-        tabList.appendChild(contact)
+    //     tabList.classList.add('tab-list')
+    //     tabList.appendChild(home)
+    //     tabList.appendChild(products)
+    //     tabList.appendChild(contact)
         
-        return tabList
-    }
+    //     return tabList
+    // }
 
-    function setHeaderLiItems(home, products, contact) {
-        home.innerText = 'Home'
-        products.innerText = 'Products'
-        contact.innerText = 'Contact'
+    // function setHeaderLiItems(home, products, contact) {
+    //     home.innerText = 'Home'
+    //     products.innerText = 'Products'
+    //     contact.innerText = 'Contact'
 
-        home.setAttribute('id', 'home')
-        home.classList.add('hidden')
-        products.setAttribute('id', 'products')
-        contact.setAttribute('id', 'contact')
+    //     home.setAttribute('id', 'home')
+    //     home.classList.add('hidden')
+    //     products.setAttribute('id', 'products')
+    //     contact.setAttribute('id', 'contact')
 
-        addListeners(home,products,contact) 
+    //     addListeners(home,products,contact) 
 
-    }   
+    // }   
     
 
-    function addListeners(home,products,contact) {
-        home.addEventListener('click', () => {
-            content.parentNode.removeChild(content)
-            document.body.appendChild(createHomePage())
-            setHidden([home,products,contact], home)
-        })
+    // function addListeners(home,products,contact) {
+    //     home.addEventListener('click', () => {
+    //         content.parentNode.removeChild(content)
+    //         document.body.appendChild(createHomePage())
+    //         setHidden([home,products,contact], home)
+    //     })
 
-        products.addEventListener('click', () => {
-            content.parentNode.removeChild(content)
-            document.body.appendChild(createProductsPage())
-            setHidden([home,products,contact], products)
+    //     products.addEventListener('click', () => {
+    //         content.parentNode.removeChild(content)
+    //         document.body.appendChild(createProductsPage())
+    //         setHidden([home,products,contact], products)
 
-        })
+    //     })
         
-        contact.addEventListener('click', () => {
-            content.parentNode.removeChild(content)
-            document.body.appendChild(createContactPage())
-            setHidden([home,products,contact], contact)
-        })
-    }
+    //     contact.addEventListener('click', () => {
+    //         content.parentNode.removeChild(content)
+    //         document.body.appendChild(createContactPage())
+    //         setHidden([home,products,contact], contact)
+    //     })
+    // }
     
 
-    function setHidden(tabList, tab) {
+    // function setHidden(tabList, tab) {
         
-        tabList.forEach(element => {
-            if (element == tab) {
-                tab.classList.add('hidden')
-            }
-            else {
-                element.classList.remove('hidden');
-            }
-        });
-    }
+    //     tabList.forEach(element => {
+    //         if (element == tab) {
+    //             tab.classList.add('hidden')
+    //         }
+    //         else {
+    //             element.classList.remove('hidden');
+    //         }
+    //     });
+    // }
 
 
 }
