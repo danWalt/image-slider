@@ -19,6 +19,9 @@ function buildWebsite(){
         const nextButton = document.createElement('button')
         nextButton.setAttribute('id', 'btn')
         nextButton.innerText = 'Next'
+        
+        //TODO:have timer reset after a button is clicked
+        window.setInterval(function(){ clickNext(nextButton); }, 5000);
 
         // create previous button
         const previousButton = document.createElement('button')
@@ -42,16 +45,17 @@ function buildWebsite(){
 
     function addButtonsEventListeners(nextButton, previousButton) {
         nextButton.addEventListener('click', () => {
-            let newValues = nextButtonLogic(imgCounter, currentImg)
-            imgCounter = newValues[0]
-            currentImg = newValues[1]
+            let newValues = nextButtonLogic(currentImg, imgCounter%7)
+            currentImg = newValues[0]
+            imgCounter = newValues[1]
           })
 
         previousButton.addEventListener('click', () => {
-            let newValues = previousButtonLogic(imgCounter, currentImg)
-            imgCounter = newValues[0]
-            currentImg = newValues[1]      
+            let newValues = previousButtonLogic(currentImg, imgCounter)
+            currentImg = newValues[0]      
+            imgCounter = newValues[1]
           })
+
     }
 
     //create image list
@@ -61,6 +65,7 @@ function buildWebsite(){
         const orderedList = document.createElement('ul')
         orderedList.setAttribute('id', 'orderedList')
 
+        //start with showing image 1 is selected
         for (let i = 1; i<=7; i++){
             let currentLi = document.createElement('li')
             currentLi.setAttribute('id', i)
@@ -80,6 +85,11 @@ function buildWebsite(){
         buttonDiv.appendChild(orderedList)
     }
 
+}
+
+
+function clickNext(nextButton){
+    nextButton.click()
 }
 
 
@@ -112,21 +122,22 @@ function changeImage(currentImg, counter) {
 
 
 
-function nextButtonLogic(imgCounter, currentImg) {
-    if(imgCounter < 7){ //TODO: get number of images in folder
+function nextButtonLogic(currentImg,imgCounter) {
+        //TODO: get number of images in folder
         imgCounter++
         currentImg = changeImage(currentImg, imgCounter)
-    }
-    return [imgCounter, currentImg]
+    return [currentImg, imgCounter]
 }
 
 
-function previousButtonLogic(imgCounter, currentImg) {
-    if(imgCounter > 1){
+function previousButtonLogic(currentImg,imgCounter) {
         imgCounter--
+        if (imgCounter%7 == 0){
+            currentImg = changeImage(currentImg, 7);
+            return [currentImg, 7]
+        }
         currentImg = changeImage(currentImg, imgCounter);
-    }
-    return [imgCounter, currentImg]
+    return [currentImg, imgCounter]
 
 }
 
