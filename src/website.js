@@ -1,6 +1,5 @@
 import loadImage from './imageModule.js'
-//import createContactPage from './contact.js'
-//import createProductsPage from './products.js'
+
 
 function buildWebsite(){
     const header = createHeader()
@@ -10,44 +9,52 @@ function buildWebsite(){
     img1.classList.remove('hide')
     addScrollButton()
 
-    //id.substr(id.length - 1);
+    let currentImg = img1
+    let imgCounter = 1
 
-
-let currentImg = img1
-let imgCounter = 1
-
+    // add previous and next buttons
     function addScrollButton(){
         
+        //create next button
         const nextButton = document.createElement('button')
         nextButton.setAttribute('id', 'btn')
         nextButton.innerText = 'Next'
 
+        // create previous button
         const previousButton = document.createElement('button')
         previousButton.setAttribute('id', 'btn')
         previousButton.innerText = 'Previous'
 
-        nextButton.addEventListener('click', () => {
-            if(imgCounter < 7){ //TODO: get number of images in folder
-                changeImage(imgCounter + 1);
-                
-            }
-          })
-
-        previousButton.addEventListener('click', () => {
-            if(imgCounter > 1){
-                changeImage(imgCounter - 1);
-            }
-        })
+        // add functionality
+        addButtonsEventListeners(nextButton, previousButton)
         
+        // create button div
         const buttonDiv = document.createElement('div')
         buttonDiv.setAttribute('id','buttonDiv')
 
-
+        //add buttons to document body
         buttonDiv.appendChild(previousButton)
         addLi(buttonDiv)
         buttonDiv.appendChild(nextButton)
         document.body.appendChild(buttonDiv)
     }
+
+
+    function addButtonsEventListeners(nextButton, previousButton) {
+        nextButton.addEventListener('click', () => {
+            let newValues = nextButtonLogic(imgCounter, currentImg)
+            imgCounter = newValues[0]
+            currentImg = newValues[1]
+          })
+
+        previousButton.addEventListener('click', () => {
+            let newValues = previousButtonLogic(imgCounter, currentImg)
+            imgCounter = newValues[0]
+            currentImg = newValues[1]      
+          })
+    }
+
+    //create image list
 
     function addLi (buttonDiv) {
 
@@ -63,7 +70,8 @@ let imgCounter = 1
 
             currentLi.addEventListener('click', () => {
                 currentLi.classList.add('selectedItem')
-                changeImage(i)
+                imgCounter = i
+                currentImg = changeImage(currentImg,imgCounter)
             })
 
             orderedList.appendChild(currentLi)
@@ -72,110 +80,53 @@ let imgCounter = 1
         buttonDiv.appendChild(orderedList)
     }
 
-    function changeImage(counter) {
-        imgCounter = counter
-        currentImg.classList.add('hide')
-        currentImg = document.getElementById('img'+imgCounter)
-        currentImg.classList.remove('hide')
-        for (let i = 1; i<=7; i++){
-            let li = document.getElementById(i) 
-            if (i == counter){
-                li.classList.add('selectedItem')
-            }
-            else {
-                li.classList.remove('selectedItem')
-            }
-        }    
+}
+
+
+function createHeader(){
+    const header = document.createElement('header')
+    const imageSlider = document.createElement('h1')
+    imageSlider.innerText = 'Image Slider'
+    imageSlider.setAttribute('id', 'title')
+    header.appendChild(imageSlider)
+
+    return header
+}
+
+
+function changeImage(currentImg, counter) {
+    currentImg.classList.add('hide')
+    currentImg = document.getElementById('img'+counter)
+    currentImg.classList.remove('hide')
+    for (let i = 1; i<=7; i++){
+        let li = document.getElementById(i) 
+        if (i == counter){
+            li.classList.add('selectedItem')
+        }
+        else {
+            li.classList.remove('selectedItem')
+        }
+    }    
+    return currentImg
+}
+
+
+
+function nextButtonLogic(imgCounter, currentImg) {
+    if(imgCounter < 7){ //TODO: get number of images in folder
+        imgCounter++
+        currentImg = changeImage(currentImg, imgCounter)
     }
+    return [imgCounter, currentImg]
+}
 
-    // function createNavBar (header) {
-    //     const nav = createNav()
-    //     //const tabList = createTabList()
 
-    //     //nav.appendChild(tabList)
-    //     header.appendChild(nav)
-    // }
-    
-    function createHeader(){
-        const header = document.createElement('header')
-        const imageSlider = document.createElement('h1')
-        imageSlider.innerText = 'Image Slider'
-        imageSlider.setAttribute('id', 'title')
-        header.appendChild(imageSlider)
-
-        return header
+function previousButtonLogic(imgCounter, currentImg) {
+    if(imgCounter > 1){
+        imgCounter--
+        currentImg = changeImage(currentImg, imgCounter);
     }
-
-    // function createNav(){
-    //     const nav = document.createElement('nav')
-    //     return nav
-    // }
-
-    // function createTabList(){
-    //     const tabList = document.createElement('ul')
-    //     const home = document.createElement('li')
-    //     const products = document.createElement('li')
-    //     const contact = document.createElement('li')
-
-    //     setHeaderLiItems(home, products, contact)
-
-    //     tabList.classList.add('tab-list')
-    //     tabList.appendChild(home)
-    //     tabList.appendChild(products)
-    //     tabList.appendChild(contact)
-        
-    //     return tabList
-    // }
-
-    // function setHeaderLiItems(home, products, contact) {
-    //     home.innerText = 'Home'
-    //     products.innerText = 'Products'
-    //     contact.innerText = 'Contact'
-
-    //     home.setAttribute('id', 'home')
-    //     home.classList.add('hidden')
-    //     products.setAttribute('id', 'products')
-    //     contact.setAttribute('id', 'contact')
-
-    //     addListeners(home,products,contact) 
-
-    // }   
-    
-
-    // function addListeners(home,products,contact) {
-    //     home.addEventListener('click', () => {
-    //         content.parentNode.removeChild(content)
-    //         document.body.appendChild(createHomePage())
-    //         setHidden([home,products,contact], home)
-    //     })
-
-    //     products.addEventListener('click', () => {
-    //         content.parentNode.removeChild(content)
-    //         document.body.appendChild(createProductsPage())
-    //         setHidden([home,products,contact], products)
-
-    //     })
-        
-    //     contact.addEventListener('click', () => {
-    //         content.parentNode.removeChild(content)
-    //         document.body.appendChild(createContactPage())
-    //         setHidden([home,products,contact], contact)
-    //     })
-    // }
-    
-
-    // function setHidden(tabList, tab) {
-        
-    //     tabList.forEach(element => {
-    //         if (element == tab) {
-    //             tab.classList.add('hidden')
-    //         }
-    //         else {
-    //             element.classList.remove('hidden');
-    //         }
-    //     });
-    // }
-
+    return [imgCounter, currentImg]
 
 }
 
